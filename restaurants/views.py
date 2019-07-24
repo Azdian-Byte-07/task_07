@@ -31,8 +31,17 @@ def restaurant_create(request):
     return render(request, 'create.html', context)
 
 def restaurant_update(request, restaurant_id):
-
-    return
+    form = RestaurantForm()
+    if request.method == "POST":
+        form = RestaurantForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('restaurant-list')
+    context = {
+        "update": [{"form": form,
+                   "id": restaurant_id}],
+    }
+    return render(request, "update.html", context )
 
 def restaurant_delete(request, restaurant_id):
 
